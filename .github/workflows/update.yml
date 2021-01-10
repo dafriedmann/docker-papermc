@@ -13,9 +13,10 @@ jobs:
       uses: wei/curl@v1
       with:
         args: -fsSL 'https://papermc.io/api/v2/projects/paper' --output version.json
-    - name: Load version
-      id: load-papcermc-version
+    - name: Get latest version
+      id: get-version
       run: |
           content=`cat version.json`
           latest_version=`echo $(jq -r '.versions' | last <<< "$content")`
-          echo $latest_version
+          echo '::set-output name=LATEST_VERSION::$(jq -r '.versions' | last <<< "$content")'
+          echo "The latest version is ${{ steps.get-version.outputs.LATEST_VERSION }}"
