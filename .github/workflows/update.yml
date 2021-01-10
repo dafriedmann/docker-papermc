@@ -14,4 +14,4 @@ jobs:
       with:
         url: 'https://papermc.io/api/v2/projects/paper'
         property_path: versions
-    - run: echo ${{ versions }} 
+    # - run: echo ${{ versions }} 
