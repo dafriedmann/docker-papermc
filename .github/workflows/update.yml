@@ -9,9 +9,13 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-    - name: get version
-      uses: senmu/download-json-property-action@v1.0.0
+    - name: Download versions manifest
+      uses: wei/curl@v1
       with:
-        url: 'https://papermc.io/api/v2/projects/paper'
-        property_path: versions
-    # - run: echo ${{ versions }} 
+        args: -fsSL 'https://papermc.io/api/v2/projects/paper' --output version.json
+    - name: Load version
+      id: load-papcermc-version
+      run: |
+          content=`cat version.json`
+          latest_version=`echo $(jq -r '.versions' | last <<< "$content")`
+          echo $latest_version
