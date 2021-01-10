@@ -9,14 +9,7 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-    - name: Download versions manifest
-      uses: wei/curl@v1
-      with:
-        args: -fsSL 'https://papermc.io/api/v2/projects/paper' --output version.json
     - name: Get latest version
-      id: get-version
+      id: latestrelease
       run: |
-          content=`cat version.json`
-          latest_version=`echo $(jq -r '.versions' | last <<< "$content")`
-          echo '::set-output name=LATEST_VERSION::$(jq -r '.versions' | last <<< "$content")'
-          echo "The latest version is ${{ steps.get-version.outputs.LATEST_VERSION }}"
+           echo "::set-output name=LATEST_VERSION::$(curl -sS https://papermc.io/api/v2/projects/paper | jq '.versions.[-1]' | sed 's/\"//g')"
