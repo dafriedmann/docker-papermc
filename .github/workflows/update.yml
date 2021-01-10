@@ -12,5 +12,5 @@ jobs:
     - name: Get latest version
       id: latest-version
       run: |
-           echo "::set-output name=LATEST_VERSION::$(curl -sS https://papermc.io/api/v2/projects/paper | jq .versions.[-1] | sed 's/\"//g')"
+           echo "::set-output name=LATEST_VERSION::$(curl -sS https://papermc.io/api/v2/projects/paper | jq .versions | sed 's/\"//g')"
            echo {{ $LATEST_VERSION }}
