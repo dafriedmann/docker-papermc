@@ -1,0 +1,17 @@
+name: Update minecraft
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  push:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+    - name: get version
+      uses: senmu/download-json-property-action@v1.0.0
+      with:
+        url: 'https://papermc.io/api/v2/projects/paper'
+        property_path: versions
+    - run: echo ${{ versions[0] }} 
